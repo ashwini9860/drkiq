@@ -7,6 +7,7 @@ devise_for :users
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
    get "/pages/:page" => "pages#show"
+   post "test_mail" => "pages#test_mail"
 #   root "pages#show", page: "home"
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

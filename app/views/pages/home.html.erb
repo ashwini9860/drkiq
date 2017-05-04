@@ -1,5 +1,13 @@
-<h1>Sample Rails application</h1>
-<h2>Home Page</h2>
+Users list
+<ul id="menu">
+<% User.all.each do |u| %>
+<li> <%= u.email %> </li>
+<% end %>
+</h3>
 
-<p>This would be a static home page in a Rails application.</p>
+<hr>
 
+<%= form_tag test_mail_path do%>
+Email : </br><%= text_field_tag 'email', ''%></br>
+<%= submit_tag "submit",:value => "submit"%>
+<%end%>

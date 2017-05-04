@@ -6,8 +6,8 @@ Users list
 </h3>
 
 <hr>
-
+queued jobs <%=  @count %>
 <%= form_tag test_mail_path do%>
-Email : </br><%= text_field_tag 'email', ''%></br>
-<%= submit_tag "submit",:value => "submit"%>
+Email : </br><%#= text_field_tag 'email', ''%></br>
+<%= submit_tag "Submit",:value => "Queue mail to Ashwini"%>
 <%end%>

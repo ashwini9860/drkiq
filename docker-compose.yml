@@ -1,0 +1,57 @@
+postgres:
+  image: postgres:9.4.5
+  environment:
+    POSTGRES_USER: drkiq
+    POSTGRES_PASSWORD: yourpassword
+  ports:
+    - '5432:5432'
+  volumes:
+    - drkiq-postgres:/var/lib/postgresql/data
+
+redis:
+  image: redis:3.0.5
+  ports:
+    - '6379:6379'
+  volumes:
+    - drkiq-redis:/var/lib/redis/data
+
+drkiq:
+  build: .
+  links:
+    - postgres
+    - redis
+  volumes:
+    - .:/drkiq
+  ports:
+    - '500:80'
+    - '8000:8000'
+  env_file:
+    - .drkiq.env
+
+
+sidekiq:
+  build: .
+  command: bundle exec sidekiq -C config/sidekiq.yml
+  links:
+    - postgres
+    - redis
+  volumes:
+    - .:/drkiq
+  env_file:
+    - .drkiq.env
+
+solr:
+  build: .
+  command: bundle exec rake sunspot:solr:run
+  ports:
+    - "8982:8982"
+  env_file:
+    - .drkiq.env
+
+drkiq_web:
+  image: nginx-web
+  links:
+   - drkiq
+  ports:
+    - '400:80'
+
